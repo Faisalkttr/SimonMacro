@@ -13,7 +13,12 @@ st.caption("Execution > Prediction | Survival First")
 # --------------------------------------------------
 # API CONFIG
 # --------------------------------------------------
-api_key = st.sidebar.text_input("FRED API Key", type="password")
+
+api_key = st.secrets.get("FRED_API_KEY")
+
+if not api_key:
+    api_key = st.sidebar.text_input("Enter FRED API Key", type="password")
+
 
 start_date = "2018-01-01"
 end_date = datetime.now().strftime("%Y-%m-%d")
