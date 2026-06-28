@@ -22,7 +22,7 @@ end_date = datetime.now().strftime("%Y-%m-%d")
 # SERIES MAP (UPDATED TO MATCH YOUR SYSTEM)
 # --------------------------------------------------
 SERIES = {
-    "DXY": "DTWEXAFE",
+    "DXY": "DTWEXAFEGS",
     "10Y": "DGS10",
     "FED": "WALCL",
     "RRP": "RRPONTSYD",
