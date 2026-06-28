@@ -114,7 +114,6 @@ if liq_trend > 0 and regime == "QT":
     regime = "EARLY_PIVOT"
 elif liq_trend < 0 and regime != "QT":
     regime = "HIDDEN_TIGHTENING"
-
 # --------------------------------------------------
 # BASE ALLOCATION (FROM YOUR RULEBOOK)
 # --------------------------------------------------
