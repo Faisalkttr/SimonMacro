@@ -36,6 +36,7 @@ SERIES = {
 @st.cache_data(ttl=86400)
 def fetch(series):
     url = "https://api.stlouisfed.org/fred/series/observations"
+    
     params = {
         "series_id": series,
         "api_key": api_key,
@@ -44,13 +45,29 @@ def fetch(series):
         "observation_end": end_date
     }
 
-    r = requests.get(url, params=params)
-    data = r.json()
+    try:
+        r = requests.get(url, params=params)
+        data = r.json()
 
-    df = pd.DataFrame(data["observations"])
-    df["date"] = pd.to_datetime(df["date"])
-    df["value"] = pd.to_numeric(df["value"], errors="coerce")
-    return df.dropna().set_index("date")["value"]
+        # ✅ IMPORTANT: check if data exists
+        if "observations" not in data:
+            st.error(f"Error loading data for {series}. Check API key.")
+            return pd.Series()
+
+        df = pd.DataFrame(data["observations"])
+
+        if df.empty:
+            st.warning(f"No data for {series}")
+            return pd.Series()
+
+        df["date"] = pd.to_datetime(df["date"])
+        df["value"] = pd.to_numeric(df["value"], errors="coerce")
+
+        return df.dropna().set_index("date")["value"]
+
+    except Exception as e:
+        st.error(f"Failed to load {series}")
+        return pd.Series()
 
 # --------------------------------------------------
 # FETCH DATA
