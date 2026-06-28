@@ -110,9 +110,9 @@ regime = classify_regime(y10, dxy)
 # --------------------------------------------------
 # LIQUIDITY OVERRIDE (FRONT-RUN)
 # --------------------------------------------------
-if liquidity_impulse.iloc[-1] > 0 and regime == "QT":
+if liq_trend > 0 and regime == "QT":
     regime = "EARLY_PIVOT"
-elif liquidity_impulse.iloc[-1] < 0 and regime != "QT":
+elif liq_trend < 0 and regime != "QT":
     regime = "HIDDEN_TIGHTENING"
 
 # --------------------------------------------------
