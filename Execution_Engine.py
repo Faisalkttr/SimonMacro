@@ -189,4 +189,3 @@ st.dataframe(pd.DataFrame.from_dict(allocation, orient="index", columns=["%"]))
 
 if risk_kill:
     st.error("⚠️ RISK OFF: SYSTEM PROTECTION ACTIVE")
-``
