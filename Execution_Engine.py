@@ -83,7 +83,7 @@ if dxy.empty or y10.empty:
 # --------------------------------------------------
 # LIQUIDITY ENGINE
 # --------------------------------------------------
-net_liquidity = fed - rrp - tga
+net_liquidity = (fed - rrp - tga).dropna()
 liquidity_impulse = net_liquidity.pct_change(30).dropna()
 liq_trend = liquidity_impulse.iloc[-1] if not liquidity_impulse.empty else 0
 
