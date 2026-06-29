@@ -97,6 +97,14 @@ credit_trend = credit_spread.pct_change(30).dropna()
 credit_trend_val = credit_trend.iloc[-1] if not credit_trend.empty else 0
 
 # --------------------------------------------------
+# ✅ ACTUAL LEVEL VALUES
+# --------------------------------------------------
+latest_yield = y10.iloc[-1] if not y10.empty else 0
+latest_dxy = dxy.iloc[-1] if not dxy.empty else 0
+latest_credit = credit_spread.iloc[-1] if not credit_spread.empty else 0
+latest_liquidity = net_liquidity.iloc[-1] if not net_liquidity.empty else 0
+
+# --------------------------------------------------
 # CREDIT STATE (EDGE)
 # --------------------------------------------------
 def credit_state(val):
@@ -206,10 +214,29 @@ st.subheader("Macro Chokepoints")
 
 c1, c2, c3, c4 = st.columns(4)
 
-c1.metric("Liquidity", f"{liq_trend*100:.2f}%", arrow(liq_trend))
-c2.metric("10Y Yield", f"{yield_trend*100:.2f}%", arrow(yield_trend))
-c3.metric("DXY", f"{dxy_trend*100:.2f}%", arrow(dxy_trend))
-c4.metric("Credit Spread", f"{credit_trend_val*100:.2f}%", arrow(credit_trend_val))
+c1.metric(
+    "Liquidity",
+    f"{latest_liquidity/1e12:.2f}T",
+    f"{liq_trend*100:.2f}% {arrow(liq_trend)}"
+)
+
+c2.metric(
+    "10Y Yield",
+    f"{latest_yield:.2f}%",
+    f"{yield_trend*100:.2f}% {arrow(yield_trend)}"
+)
+
+c3.metric(
+    "DXY",
+    f"{latest_dxy:.2f}",
+    f"{dxy_trend*100:.2f}% {arrow(dxy_trend)}"
+)
+
+c4.metric(
+    "Credit Spread",
+    f"{latest_credit:.2f}%",
+    f"{credit_trend_val*100:.2f}% {arrow(credit_trend_val)}"
+)
 
 # --------------------------------------------------
 # SYSTEM STATE
